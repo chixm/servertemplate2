@@ -39,12 +39,12 @@ func LoadServices() (*(map[string]func(w http.ResponseWriter, r *http.Request)),
 
 // "HomeHandler HTMLテンプレートによるWebページの表示"
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	showTemplate(w, nil, "../../resources/top.html", "../../resources/parts/header.html")
+	showTemplate(w, nil, "resources/top.html", "resources/parts/header.html")
 }
 
 // 各URLごとの処理を記述
 func InformationHandler(w http.ResponseWriter, r *http.Request) {
-	showTemplate(w, nil, "../../resources/information.html", "../../resources/parts/header.html")
+	showTemplate(w, nil, "resources/information.html", "resources/parts/header.html")
 }
 
 func MatchHandler(w http.ResponseWriter, r *http.Request) {
@@ -52,7 +52,7 @@ func MatchHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
-	showTemplate(w, nil, "../../resources/login.html", "../../resources/parts/header.html")
+	showTemplate(w, nil, "resources/login.html", "resources/parts/header.html")
 }
 
 // Write out current Request headers and params to know what is sent to server.
@@ -67,7 +67,7 @@ func requestViewHander(w http.ResponseWriter, r *http.Request) {
 	disp[`method`] = r.Method
 	disp[`header`] = r.Header
 	disp[`body`] = body
-	showTemplate(w, disp, "../../resources/httprequest.html", "../../resources/parts/header.html")
+	showTemplate(w, disp, "resources/httprequest.html", "resources/parts/header.html")
 }
 
 func WebdriverHandler(w http.ResponseWriter, r *http.Request) {
