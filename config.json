@@ -1,0 +1,41 @@
+{
+	"port" : 80,
+	"database": [
+		{
+			"id": "masterBD",
+			"name": "test",
+			"host": "localhost",
+			"port": 3306,
+			"username" : "root",
+			"password" : "",
+			"maxidle" : 5,
+			"maxopen" : 10
+		},
+		{
+			"id" : "slaveDB",
+			"name": "test",
+			"host": "localhost",
+			"port": 3306,
+			"username" : "root",
+			"password" : "",
+			"maxidle" : 5,
+			"maxopen" : 10
+		}
+	],
+	"redis": [
+		{
+			"id": "default",
+			"host":"127.0.0.1",
+			"port": 6379,
+			"maxidle":3,
+			"maxactive":5
+		}
+	],
+	"email": {
+		"smtp": "smtp.gmail.com",
+		"smtpSvr": "smtp.gmail.com:587",
+		"user": "*****@gmail.com",
+		"password": "******",
+		"testSendAddr": ""
+	}
+}
