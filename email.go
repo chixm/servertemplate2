@@ -2,6 +2,8 @@ package main
 
 import (
 	"net/smtp"
+
+	conf "github.com/chixm/servertemplate2/config"
 )
 
 // Mail sending function. only send, not to receive.
@@ -9,6 +11,7 @@ import (
 
 // tests by sending email
 func initializeEmailSender() {
+	config := conf.GetConfig()
 	if config.Email != nil && config.Email.TestSendAddr != `` {
 		logger.Infoln(`Begin sending Email test`)
 		to := []string{config.Email.TestSendAddr}
@@ -22,6 +25,7 @@ func initializeEmailSender() {
 }
 
 func sendEmail(to []string, from string, message []byte) error {
+	config := conf.GetConfig()
 	auth := smtp.PlainAuth("", config.Email.User, config.Email.Password, config.Email.Smtp)
 	err := smtp.SendMail(config.Email.SmtpSvr, auth, from, to, message)
 	if err != nil {

@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/chixm/servertemplate2/config"
 	"github.com/gorilla/mux"
 )
 
@@ -25,7 +26,7 @@ func main() {
 func initialize() {
 	setupLog(useLogFile)
 
-	initializeConfig()
+	config.InitializeConfig()
 
 	initializeUniqueIDMaker()
 
@@ -78,7 +79,7 @@ func createServerEndPoints() *mux.Router {
 func launchServer(r http.Handler) error {
 	server := &http.Server{
 		Handler:      r,
-		Addr:         "localhost:" + strconv.Itoa(config.Port),
+		Addr:         "localhost:" + strconv.Itoa(config.GetConfig().Port),
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}

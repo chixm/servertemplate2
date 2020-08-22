@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 
+	conf "github.com/chixm/servertemplate2/config"
 	"github.com/jmoiron/sqlx"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -17,6 +18,7 @@ var database map[string]*sqlx.DB
 // init configuration of database. requires configurations loaded.
 // To See MySQL driver settings format. Go to https://github.com/go-sql-driver/mysql/
 func initializeDatabaseConnections() {
+	config := conf.GetConfig()
 	database = make(map[string]*sqlx.DB)
 	for _, dbConf := range config.Database {
 		// Connecting to MySQL server.

@@ -1,8 +1,7 @@
-package main
+package config
 
 // load Configuration File in root path.
 // config.json for default
-//
 
 import (
 	"log"
@@ -15,9 +14,14 @@ import (
 // Config Parameter Holder
 var config *Configuration
 
-// read configuration file.
-func initializeConfig() {
-	logger.Println(`[Configuration]`)
+// GetConfig get instance of Configuration, run after InitializeConfig() have finished.
+func GetConfig() *Configuration {
+	return config
+}
+
+// InitializeConfig read configuration file and load and instantiate Configuration
+func InitializeConfig() {
+	log.Println(`[Configuration]`)
 	loadConfiguration()
 }
 
@@ -52,15 +56,15 @@ func loadConfiguration() {
 
 func printConfiguration(c *Configuration) {
 	for _, v := range c.Database {
-		logger.Println(`Loaded Database Configuration of ::` + v.Id + "[" + v.Host + ":" + strconv.Itoa(v.Port) + "]")
+		log.Println(`Loaded Database Configuration of ::` + v.Id + "[" + v.Host + ":" + strconv.Itoa(v.Port) + "]")
 	}
 	for _, r := range c.Redis {
-		logger.Println(`Loaded Redis Configuration of ::` + r.Id + "[" + r.Host + "]")
+		log.Println(`Loaded Redis Configuration of ::` + r.Id + "[" + r.Host + "]")
 	}
 
 }
 
-// ALL Configuration File Contents Structure
+// Configuration ALL Configuration File Contents Structure
 type Configuration struct {
 	Port     int            // server port
 	Database []*DbConfig    //database configuration
@@ -68,7 +72,7 @@ type Configuration struct {
 	Email    *EmailConfig   // mail configuration
 }
 
-// basic database configuration
+// DbConfig basic database configuration
 type DbConfig struct {
 	Id       string
 	Name     string
@@ -80,6 +84,7 @@ type DbConfig struct {
 	MaxOpen  int
 }
 
+// RedisConfig config for Redis
 type RedisConfig struct {
 	Id        string // redis connection identifier
 	Host      string //redis server (ip or domain)
@@ -88,6 +93,7 @@ type RedisConfig struct {
 	MaxActive int    // connections Active limit
 }
 
+// EmailConfig config for email
 type EmailConfig struct {
 	Smtp         string // smtp server
 	SmtpSvr      string // smtp server to access

@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"time"
 
+	conf "github.com/chixm/servertemplate2/config"
 	"github.com/gomodule/redigo/redis"
 )
 
@@ -11,6 +12,8 @@ var redisConnections map[string]*redis.Pool
 
 // Make connections to Redis from Config
 func initializeRedis() {
+	config := conf.GetConfig()
+
 	redisConnections = make(map[string]*redis.Pool)
 
 	for _, r := range config.Redis {
