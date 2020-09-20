@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/chixm/servertemplate2/utils"
 	"log"
 	"net/http"
 )
@@ -14,7 +15,7 @@ const sessionID = `_sessionId`
 func setLoginCookie(w *http.ResponseWriter, r *http.Request) {
 	cookie := http.Cookie{
 		Name:     sessionID,
-		Value:    createUniqID(),
+		Value:    utils.CreateUniqID(),
 		HttpOnly: true,
 	}
 	http.SetCookie(*w, &cookie)

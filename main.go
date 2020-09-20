@@ -8,6 +8,7 @@ import (
 	"github.com/chixm/servertemplate2/config"
 	"github.com/chixm/servertemplate2/database"
 	"github.com/chixm/servertemplate2/redis"
+	"github.com/chixm/servertemplate2/utils"
 	"github.com/chixm/servertemplate2/websocket"
 	"github.com/gorilla/mux"
 )
@@ -31,7 +32,7 @@ func initialize() {
 
 	config.InitializeConfig()
 
-	initializeUniqueIDMaker()
+	utils.InitializeUniqueIDMaker()
 
 	database.InitializeDatabaseConnections(logger)
 
@@ -39,7 +40,7 @@ func initialize() {
 
 	redis.InitializeRedis(logger)
 
-	initializeWebdriver()
+	utils.InitializeWebdriver(logger)
 
 	initializeEmailSender()
 

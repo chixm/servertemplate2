@@ -1,4 +1,7 @@
-package main
+package utils
+
+// Creates Unique ID by random String
+//
 
 import (
 	Encoder "encoding/base64"
@@ -23,7 +26,8 @@ var mu = &sync.Mutex{}
 
 var hostName string
 
-func initializeUniqueIDMaker() {
+// InitializeUniqueIDMaker make unique ID maker
+func InitializeUniqueIDMaker() {
 	if h, err := os.Hostname(); err == nil {
 		hostName = h
 	} else {
@@ -31,7 +35,7 @@ func initializeUniqueIDMaker() {
 	}
 }
 
-func createUniqID() string {
+func CreateUniqID() string {
 	return createID()
 }
 

@@ -1,17 +1,18 @@
-package main
+package utils
 
 // Test the web pages automatically
+// requires to put chromedriver.exe on root of your application
 
 import (
-	_ "os"
-
 	"github.com/sclevine/agouti"
+	logrus "github.com/sirupsen/logrus"
+	_ "os"
 )
 
 var webdriver *agouti.WebDriver
 
-// Test All pages loaded when server launches
-func initializeWebdriver() {
+// InitializeWebdriver Test All pages loaded when server launches
+func InitializeWebdriver(logger *logrus.Entry) {
 	webdriver = agouti.ChromeDriver()
 
 	err := webdriver.Start()
