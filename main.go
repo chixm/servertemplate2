@@ -7,6 +7,8 @@ import (
 
 	"github.com/chixm/servertemplate2/config"
 	"github.com/chixm/servertemplate2/database"
+	"github.com/chixm/servertemplate2/redis"
+	"github.com/chixm/servertemplate2/websocket"
 	"github.com/gorilla/mux"
 )
 
@@ -33,7 +35,9 @@ func initialize() {
 
 	database.InitializeDatabaseConnections(logger)
 
-	initializeRedis()
+	websocket.InitializeWebSocket(logger)
+
+	redis.InitializeRedis(logger)
 
 	initializeWebdriver()
 
@@ -49,7 +53,7 @@ func terminate() {
 
 	terminateBatch()
 
-	terminateRedis()
+	redis.TerminateRedis()
 
 	terminateLog()
 }
@@ -68,8 +72,7 @@ func createServerEndPoints() *mux.Router {
 	}
 
 	// load default web socket
-	initializeWebSocket()
-	r.HandleFunc("/ws", ws)
+	r.HandleFunc("/ws", websocket.Ws)
 
 	// Files under /static can accessed by /static/(filename)...
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(`resources/static`))))

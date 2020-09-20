@@ -1,4 +1,4 @@
-package main
+package websocket
 
 // websocket connection handling of server
 
@@ -9,19 +9,24 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
+	logrus "github.com/sirupsen/logrus"
 )
 
 var upgrader websocket.Upgrader
 var messageReceiver *webSocketService
 
-func initializeWebSocket() {
+var logger *logrus.Entry
+
+// InitializeWebSocket websocket initializer
+func InitializeWebSocket(l *logrus.Entry) {
+	logger = l
 	upgrader = websocket.Upgrader{CheckOrigin: checkOriginHost}
 	messageReceiver = &webSocketService{}
 	messageReceiver.New()
 }
 
-// Entry Point of WebSocket Request
-func ws(w http.ResponseWriter, r *http.Request) {
+// Ws Entry Point of WebSocket Request
+func Ws(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil) //upgrade from http to ws
 	if err != nil {
 		logger.Errorln("Upgrade to websocket failed:: " + err.Error())
@@ -37,12 +42,15 @@ func ws(w http.ResponseWriter, r *http.Request) {
 	msgChan := messageListener(conn)
 
 	// if observer or messageLister Ends, Finish WebSocket Connection.
+loop:
 	for {
 		select {
 		case <-observeChan:
 			wg.Done()
+			break loop
 		case <-msgChan:
 			wg.Done()
+			break loop
 		default:
 			time.Sleep(100 * time.Millisecond)
 		}

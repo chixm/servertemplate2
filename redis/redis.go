@@ -1,4 +1,7 @@
-package main
+package redis
+
+// If you Confirure redis settings to config.json and call InitializeRedis.
+// you are ready to use Redis connections.
 
 import (
 	"strconv"
@@ -6,12 +9,17 @@ import (
 
 	conf "github.com/chixm/servertemplate2/config"
 	"github.com/gomodule/redigo/redis"
+	logrus "github.com/sirupsen/logrus"
 )
 
 var redisConnections map[string]*redis.Pool
 
-// Make connections to Redis from Config
-func initializeRedis() {
+var logger *logrus.Entry
+
+// InitializeRedis Make connections to Redis from Config
+func InitializeRedis(l *logrus.Entry) {
+	logger = l
+
 	config := conf.GetConfig()
 
 	redisConnections = make(map[string]*redis.Pool)
@@ -45,7 +53,8 @@ func makeConnectionPool(host string, port int, maxIdle, maxActive int) *redis.Po
 	}
 }
 
-func terminateRedis() {
+// TerminateRedis redis terminater
+func TerminateRedis() {
 	for _, c := range redisConnections {
 		err := c.Close()
 		if err != nil {
