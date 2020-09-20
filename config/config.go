@@ -36,7 +36,7 @@ func loadConfiguration() {
 		viper.SetConfigName(`config`)
 	}
 
-	viper.AddConfigPath(`../../`)
+	viper.AddConfigPath(`../`)
 	viper.AddConfigPath(`.`)
 
 	c := Configuration{}

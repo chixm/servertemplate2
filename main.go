@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/chixm/servertemplate2/config"
+	"github.com/chixm/servertemplate2/database"
 	"github.com/gorilla/mux"
 )
 
@@ -30,7 +31,7 @@ func initialize() {
 
 	initializeUniqueIDMaker()
 
-	initializeDatabaseConnections()
+	database.InitializeDatabaseConnections(logger)
 
 	initializeRedis()
 
@@ -44,7 +45,7 @@ func initialize() {
 }
 
 func terminate() {
-	terminateDatabaseConnections()
+	database.TerminateDatabaseConnections()
 
 	terminateBatch()
 

@@ -1,12 +1,11 @@
-package main
+package database
 
 import (
-	"strconv"
-
 	conf "github.com/chixm/servertemplate2/config"
-	"github.com/jmoiron/sqlx"
-
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
+	logrus "github.com/sirupsen/logrus"
+	"strconv"
 )
 
 // to use this function. you need to create database tables.
@@ -15,10 +14,13 @@ import (
 
 var database map[string]*sqlx.DB
 
+var logger *logrus.Entry
+
 // init configuration of database. requires configurations loaded.
 // To See MySQL driver settings format. Go to https://github.com/go-sql-driver/mysql/
-func initializeDatabaseConnections() {
+func InitializeDatabaseConnections(logFunc *logrus.Entry) {
 	config := conf.GetConfig()
+	logger = logFunc
 	database = make(map[string]*sqlx.DB)
 	for _, dbConf := range config.Database {
 		// Connecting to MySQL server.
@@ -33,7 +35,7 @@ func initializeDatabaseConnections() {
 }
 
 // remove connections if server ends.
-func terminateDatabaseConnections() {
+func TerminateDatabaseConnections() {
 	for key, d := range database {
 		logger.Println(`Closing Database :` + key)
 		if err := d.Close(); err != nil {
